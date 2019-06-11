@@ -37,8 +37,8 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;<el-checkbox disabled checked>接口文档</el-checkbox>
                 <br>
                 <h2>源码地址</h2>
-                <p><strong>项目前端地址：</strong><a href="https://github.com/gitchengfei/manage-vue" target="_blank">https://github.com/gitchengfei/manage-vue</a></p>
-                <p><strong>项目JAVA后端地址：</strong><a href="https://github.com/gitchengfei/manage-java" target="_blank">https://github.com/gitchengfei/manage-java</a></p>
+                <p><strong>前端：</strong><a href="https://github.com/gitchengfei/manage-vue" target="_blank">https://github.com/gitchengfei/manage-vue</a></p>
+                <p><strong>后端：</strong><a href="https://github.com/gitchengfei/manage-java" target="_blank">https://github.com/gitchengfei/manage-java</a></p>
                 <h2>参考项目</h2>
                 <p><strong>项目前端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-html" target="_blank">https://github.com/lmxdawn/vue-admin-html</a></p>
                 <p><strong>项目JAVA后端地址：</strong><a href="https://github.com/lmxdawn/vue-admin-java" target="_blank">https://github.com/lmxdawn/vue-admin-java</a></p>
