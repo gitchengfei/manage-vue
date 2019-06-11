@@ -3,7 +3,7 @@
         <div class="ms-doc">
             <h3>XXX后台管理系统</h3>
             <article>
-                <h1>vue-manage</h1>
+                <h1>后台管理系统模板</h1>
                 <h2>前言</h2>
                 <p><strong>基于Vue.js 2.x系列 + Element UI 的后台管理系统</strong></p>
                 <p><strong>后端采用java springboot + shiro + redis 缓存, 文件系统使用阿里云oss管理</strong></p>
