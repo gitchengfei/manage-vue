@@ -80,7 +80,7 @@ export const constantRouterMap = [
     {
         path: "/",
         component: Home,
-        redirect: "/readme",
+        redirect: "/main",
         name: "首页",
         hidden: true,
         meta : {
@@ -88,9 +88,9 @@ export const constantRouterMap = [
         }
     },
     {
-        path: "/readme",
+        path: "/main",
         component: Home,
-        redirect: "/readme/main",
+        redirect: "/main/index",
         icon: "iconshouye",
         name: "控制台",
         noDropdown: true,
@@ -99,7 +99,7 @@ export const constantRouterMap = [
         },
         children: [
             {
-                path: "main",
+                path: "index",
                 component: main,
                 meta : {
                     authority : ''
