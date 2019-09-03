@@ -188,7 +188,7 @@ export const asyncRouterMap = [
             {
                 path: "account",
                 component: Account,
-                name: "账号管理",
+                name: "账号列表",
                 icon: "iconzhanghaoguanli1",
                 meta: {
                     authority: '/account/account'
@@ -217,7 +217,7 @@ export const asyncRouterMap = [
             {
                 path: "file",
                 component: File,
-                name: "文件管理",
+                name: "文件列表",
                 icon: "iconfolder-fill",
                 meta: {
                     authority: '/file/file'
