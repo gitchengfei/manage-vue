@@ -21,6 +21,9 @@ import Api from "../views/system/api/Api"
 //文件管理
 import File from '../views/file/file'
 
+//任务管理
+import Task from "../views/task/Task";
+
 
 const err401 = r =>
     require.ensure([], () => r(require("../views/error/err401.vue")), "home");
@@ -218,6 +221,26 @@ export const asyncRouterMap = [
                 icon: "iconfolder-fill",
                 meta: {
                     authority: '/file/file'
+                }
+            },
+        ]
+    },{
+        path: "/task",
+        redirect: "task",
+        component: Home,
+        icon: "iconwenjian",
+        name: "任务管理",
+        meta: {
+            authority: '/task'
+        },
+        children: [
+            {
+                path: "list",
+                component: Task,
+                name: "任务列表",
+                icon: "iconfolder-fill",
+                meta: {
+                    authority: '/task/list'
                 }
             },
         ]
