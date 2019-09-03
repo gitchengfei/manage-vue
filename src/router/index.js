@@ -224,25 +224,5 @@ export const asyncRouterMap = [
                 }
             },
         ]
-    },{
-        path: "/task",
-        redirect: "task",
-        component: Home,
-        icon: "iconwenjian",
-        name: "任务管理",
-        meta: {
-            authority: '/task'
-        },
-        children: [
-            {
-                path: "list",
-                component: Task,
-                name: "任务列表",
-                icon: "iconfolder-fill",
-                meta: {
-                    authority: '/task/list'
-                }
-            },
-        ]
     }
 ];
