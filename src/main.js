@@ -80,6 +80,10 @@ Vue.prototype.$OnUploadError = onUploadError;
 
 // Vue.component('ElUpload', ElUpload);
 
+import imgUpload from "./views/img/imgUpload"
+Vue.component('imgUpload', imgUpload);
+
+
 
 
 // 注册全局实用程序过滤器（register global utility filters）.

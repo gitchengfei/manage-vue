@@ -6,7 +6,6 @@
 
 import OSS from 'ali-oss'
 import { Message } from 'element-ui';
-import Config from "../../../config/Config"
 import {Aliyun} from "../../../config/AliyunConfig"
 import FILE_CONSTANT from "../../../config/FileConstant"
 import {createUUID} from '../../UUID/UUIDUtil'
@@ -14,6 +13,7 @@ import axios  from "../../http/axios"
 import { checkHttpData } from "../../http/Http"
 import store from "../../../store";
 import * as types from "../../../store/mutation-types";
+import DateUtil from "../../date/DateUtil";
 
 /**
  * @Description : 上传文件至OSS
@@ -98,23 +98,24 @@ async function saveFile(option, uploadFileName) {
  * @param time
  * @returns {Promise<void>}
  */
-async function uploadOSSByElement(option, type, filePurpose, time) {
+export async function uploadOSSByElement(option) {
     store.commit(types.OPEN_HTTP, "上传中,请稍后...");
     try {
-        let file = option.file;
+        const file = option.file;
         const fileName = file.name;
-        let point = fileName.lastIndexOf('.');
-        let suffix = fileName.substr(point);
-        let newFileName = createUUID() + suffix;
-        let  meta = {
+        const point = fileName.lastIndexOf('.');
+        const suffix = fileName.substr(point);
+        const newFileName = createUUID() + suffix;
+        const date = DateUtil.getDate().replace(/-/g, "/");
+        const  meta = {
             fileName : encodeURI(fileName),
-            path: newFileName,
+            path: date + '/' + newFileName,
             fileExtension: suffix.substr(1),
             fileType: file.type,
-            type : type ? type : "",
-            filePurpose : filePurpose ? filePurpose : "",
+            type : option.data && option.data.fileConstant ? option.data.fileConstant : "",
+            filePurpose :  option.data && option.data.filePurpose ? option.data.filePurpose : "",
             size: file.size,
-            time: time ? time : "",
+            time: option.data && option.data.time ? option.data.time : "",
         };
         // 获取OSS连接
         let client = new OSS(Aliyun.OSS);
@@ -122,7 +123,7 @@ async function uploadOSSByElement(option, type, filePurpose, time) {
         let ret = null;
         try {
             ret =  await client.multipartUpload(
-                newFileName,
+                date + '/' + newFileName,
                 file,
                 {
                     progress: async function (p) {
@@ -146,10 +147,10 @@ async function uploadOSSByElement(option, type, filePurpose, time) {
         if (ret && ret.res.statusCode === 200) {
             //将上传后结果上传至后台
             try {
-                return await saveFile(option, newFileName);
+                return await saveFile(option, date + '/' +newFileName);
             } catch (e) {
                 console.log("error==>", e);
-                deleteOSSFile(newFileName)
+                deleteOSSFile(date + '/' +newFileName)
             }
         } else {
             option.onError('上传失败')
@@ -172,13 +173,16 @@ export function onUploadError(err, file, fileList){
     Message.error(err)
 }
 
+
 /**
- * @Description : 上传账号头像
+ * @Description : 上传文件
  * @Author : cheng fei
- * @CreateDate 2019/6/1 22:49
- * @returns
+ * @CreateDate 2020/1/31 13:18
+ * @param option 上传参数
+ * @param fileConstant 文件类型
+ * @param filePurpose 文件用途
+ * @return {Promise<void>}
  */
-export async function uploadByHeadPortrait(option) {
-    console.log("uploadByHeadPortrait");
-    return await uploadOSSByElement(option, FILE_CONSTANT.TYPE.IMAGE, FILE_CONSTANT.FILE_PURPOSE.ACCOUNT_HEAD_PORTRAIT)
+export async function uploadByFile(option) {
+    return await uploadOSSByElement(option)
 }

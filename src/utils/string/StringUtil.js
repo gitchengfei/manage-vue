@@ -39,6 +39,23 @@ const stringUtil = {
         }
     },
     /**
+     * @Description : 检测Boolean
+     * @Author : cheng fei
+     * @CreateDate 2020/2/3 12:06
+     * @param value
+     */
+    checkBoolean(value) {
+        if (value) {
+            if (value === true || value === "true") {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    },
+    /**
      * @Description : 格式化字符串(element表格字符串格式化)
      * @Author : cheng fei
      * @CreateDate 2019/4/21 23:53
@@ -76,13 +93,17 @@ const stringUtil = {
         return formatFileSize(row.size)
     },
     /**
-     * @Description : 格式化文件大小
+     * @Description : 数据为空时提示信息
      * @Author : cheng fei
-     * @CreateDate 2019/6/10 18:07
-     * @param size 文件大小
+     * @CreateDate 2020/2/4 16:29
+     * @param size
      */
-    formatFileSize (size) {
-
+    formatByElementTableEmptyText (pagePermission) {
+        if (pagePermission) {
+            return "暂无数据"
+        } else {
+            return "您无查看权限！"
+        }
     }
 };
 

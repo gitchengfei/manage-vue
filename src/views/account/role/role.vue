@@ -12,6 +12,9 @@
                         <el-form-item label="角色名：" size="mini">
                             <el-input v-model="name" placeholder="请输入用户名" clearable></el-input>
                         </el-form-item>
+                        <el-form-item label="角色编码：" size="mini">
+                            <el-input v-model="roleCode" placeholder="请输入角色编码" clearable></el-input>
+                        </el-form-item>
                         <el-form-item label="每页显示记录数：" size="mini">
                             <el-select v-model="pageSize" placeholder="请选择" style="width: 20vw">
                                 <el-option value="3" label="3"></el-option>
@@ -40,6 +43,9 @@
                                 <el-form label-position="left" inline class="demo-table-expand">
                                     <el-form-item label="角色名称：" size="mini">
                                         <span>{{ props.row.name }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="角色编码：" size="mini">
+                                        <span>{{ props.row.roleCode }}</span>
                                     </el-form-item>
                                     <p>
                                         <el-form-item label="状态：">
@@ -124,6 +130,12 @@
                         <el-input v-model="name" placeholder="请输入角色名" @change="changName" clearable
                                   style="width: 10vw"></el-input>
                     </div>
+
+                    <div class="search_div" style="margin: 1.3vh 1vw">
+                        <span style="color: #000000;font-size: 1.6vh">角色编码：</span>
+                        <el-input v-model="roleCode" placeholder="请输入角色编码" @change="changName" clearable
+                                  style="width: 10vw"></el-input>
+                    </div>
                 </div>
             </div>
             <div class="header-item border-r" style="margin-top: 2vh">
@@ -145,6 +157,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column prop="name" label="角色名称" align="center" width="120"></el-table-column>
+                        <el-table-column prop="roleCode" label="角色编码" align="center" width="120"></el-table-column>
                         <el-table-column prop="displayOrder" label="排序码" align="center" width="80"></el-table-column>
                         <el-table-column prop="createTime" label="创建日期" align="center" width="200"
                                          :formatter="$DateUtil.formatByElementTable"></el-table-column>
@@ -205,11 +218,13 @@
         </div>
 
         <!-- 表单 -->
-        <el-dialog :title="roleForm.roleFormTitle" :visible.sync="roleForm.openOrClose" :width="isPc ? '60%' : '90%'"
-                   top="10vh">
+        <el-dialog :title="roleForm.roleFormTitle" :visible.sync="roleForm.openOrClose" :width="isPc ? '60%' : '90%'" top="10vh">
             <el-form :model="roleForm" :rules="roleFormRules" ref="roleForm">
                 <el-form-item label="角色名称" prop="name">
                     <el-input type="text" v-model="roleForm.name" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="角色编码" prop="roleCode">
+                    <el-input type="text" v-model="roleForm.roleCode" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="排序码" prop="displayOrder">
                     <el-input type="text" v-model="roleForm.displayOrder" auto-complete="off"></el-input>
@@ -255,7 +270,7 @@
                         _this,
                         "account/role/check/name",
                         {
-                            id: _this.roleForm.id,
+                            excludeId: _this.roleForm.id,
                             name: _this.roleForm.name
                         },
                         function (self, data) {
@@ -268,6 +283,27 @@
                     )
                 } else {
                     callback("请输入角色名称!")
+                }
+            };
+            let validateRoleCode = function (rule, value, callback) {
+                if (_this.$StringUtil.isNotBlank(value)) {
+                    _this.$Http.doPostCheckParam(
+                        _this,
+                        "account/role/check/code",
+                        {
+                            excludeId: _this.roleForm.id,
+                            code: _this.roleForm.roleCode
+                        },
+                        function (self, data) {
+                            if (data.data) {
+                                callback()
+                            } else {
+                                callback("[ " + value + " ]角色编码已存在!")
+                            }
+                        }
+                    )
+                } else {
+                    callback("请输入角色编码!")
                 }
             };
             /**
@@ -307,6 +343,9 @@
                 //角色模糊查询
                 name: "",
 
+                //角色编码模糊查询
+                roleCode : "",
+
                 /**** 分页 *****/
 
                 //当前页
@@ -328,6 +367,8 @@
                     id: "",
                     //角色名称
                     name: "",
+                    //角色编码
+                    roleCode : "",
                     //排序码
                     displayOrder: "",
                     //角色备注
@@ -341,6 +382,10 @@
                     name: [
                         {required: true, message: "角色名称不能为空!", trigger: "blur"},
                         {validator: validateName}
+                    ],
+                    roleCode: [
+                        {required: true, message: "角色编码不能为空!", trigger: "blur"},
+                        {validator: validateRoleCode}
                     ],
                     displayOrder: [
                         {required: true, message: "菜单排序码不能为空!", trigger: "blur"},
@@ -437,6 +482,7 @@
                         "account/role/list",
                         {
                             name: this.name,
+                            roleCode: this.roleCode,
                             page: this.currentPage,
                             pageSize: this.pageSize
                         },
@@ -503,6 +549,7 @@
                         this.roleForm.roleFormTitle = "修改角色";
                         this.roleForm.id = data.id;
                         this.roleForm.name = data.name;
+                        this.roleForm.roleCode = data.roleCode;
                         this.roleForm.displayOrder = data.displayOrder;
                         this.roleForm.remark = data.remark;
                         this.roleForm.updateTime = this.$StringUtil.isBlank(data.updateTime) ? "" : data.updateTime;
@@ -537,6 +584,7 @@
                     if (valid) {
                         let param = {
                             name: this.roleForm.name,
+                            roleCode : this.roleForm.roleCode,
                             displayOrder: this.roleForm.displayOrder,
                             remark: this.roleForm.remark
                         };

@@ -5,7 +5,6 @@
  */
 import axios from "./axios";
 import router from "../../router/index";
-import config from "../../config/Config";
 import { Confirm } from '../confirm/ConfirmUtil';
 import { getToken } from "../account/AccountUtil"
 import store from "../../store/index";
@@ -230,6 +229,7 @@ function doPostForJson(self, url, param, successFunction, failedFunction, except
         method: 'POST',
         url: url,
         data: param,
+        headers: {'Content-Type': 'application/json;charset=UTF-8'}
     }).then(response => {
         if (showErrorMSg) {
             store.commit(types.CLOSE_HTTP);

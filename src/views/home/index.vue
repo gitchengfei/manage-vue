@@ -101,7 +101,11 @@
                         <el-upload
                             class="avatar-uploader"
                             action=""
-                            :http-request="uploadByHeadPortrait"
+                            :http-request="uploadOSSByElement"
+                            :data="{
+                                fileConstant : fileConstant,
+                                filePurpose :filePurpose,
+                            }"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
@@ -139,7 +143,8 @@
 <script>
     import {mapGetters} from "vuex";
     import SidebarItem from "./SidebarItem.vue";
-    import {uploadByHeadPortrait} from "../../utils/file/upload/Upload"
+    import {uploadOSSByElement} from "../../utils/file/upload/Upload"
+    import FILE_CONSTANT from "../../config/FileConstant"
 
     export default {
         data() {
@@ -171,6 +176,9 @@
                 }
             };
             return {
+                FILE_CONSTANT:FILE_CONSTANT,
+                fileConstant : "",
+                filePurpose :"",
                 //是否是PC端
                 isPc: true,
                 menuShow: false,
@@ -212,7 +220,7 @@
                 //头像
                 headPortrait: "",
                 //新头像
-                newHeadPortrait : "",
+                newHeadPortrait: "",
                 //新头像Id
                 newHeadPortraitId: "",
             };
@@ -251,7 +259,7 @@
             }
         },
         methods: {
-            uploadByHeadPortrait,
+            uploadOSSByElement,
             toggleSideBar() {
                 this.$store.dispatch("ToggleSideBar");
             },
@@ -372,6 +380,8 @@
             }
         },
         mounted() {
+            this.fileConstant = this.FILE_CONSTANT.TYPE.IMAGE;
+            this.filePurpose = this.FILE_CONSTANT.FILE_PURPOSE.ACCOUNT_HEAD_PORTRAIT;
             this.isPc = this.$IsPC();
             this.headPortrait = this.$store.getters.headPortrait;
         },
