@@ -21,9 +21,6 @@ import Api from "../views/system/api/Api"
 //文件管理
 import File from '../views/file/file'
 
-//任务管理
-import Task from "../views/task/Task";
-
 
 const err401 = r =>
     require.ensure([], () => r(require("../views/error/err401.vue")), "home");
