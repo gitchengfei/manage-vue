@@ -239,8 +239,7 @@
                 return this.$route.path;
             },
             username() {
-                let username = this.$store.getters.username;
-                return !username ? this.name : username;
+                return this.$store.getters.name ? this.$store.getters.name : this.$store.getters.username;
             },
             isCollapse() {
                 return this.$store.state.app.sidebar.opened;
