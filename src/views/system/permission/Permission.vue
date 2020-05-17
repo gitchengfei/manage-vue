@@ -464,11 +464,11 @@
                 }
             }
         },
-        mounted() {
+        async mounted() {
             this.isPc = this.$IsPC();
             this.pageSize = this.isPc ? 10 : 5;
             //获取页面按钮权限
-            this.$GetAccountMenuPermission(this.pagePermission)
+            await this.$GetAccountMenuPermission(this.pagePermission)
         },
         methods: {
             /**
