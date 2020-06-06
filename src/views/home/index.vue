@@ -25,8 +25,9 @@
         </el-scrollbar>
 
         <el-container class="container-box" v-bind:class="{'slide-hide': isCollapse, 'slide-in-left': menuShow}">
-            <el-header class="header">
-                <div class="header-left">
+
+            <el-header class="header" height="40px" id="header">
+                <div class="header-left" id="header_left">
                     <div class="header-toggle" @click="menuShow = !menuShow; showSideBar()">
                         <span></span>
                         <span></span>
@@ -38,18 +39,23 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="header-tabs-box">
-                    <el-breadcrumb class="app-levelbar" separator="/">
-                        <el-breadcrumb-item v-for="(item,index)  in levelList" :key="item.path">
-                        <span v-if='item.redirect==="noredirect"|| index === levelList.length-1'
-                              class="no-redirect">{{item.name}}</span>
-                            <router-link v-else :to="item.redirect || item.path">{{item.name}}</router-link>
-                        </el-breadcrumb-item>
-                    </el-breadcrumb>
+                <div class="header-tabs-box" style="margin-left: 20px; height: 42px;" :style="{ 'width' : headerTabsBoxWidth}">
+                    <el-tabs v-model="pageTabValue"  closable @tab-remove="removeTab" @tab-click="tabClick">
+                        <el-tab-pane v-for="(item, index) in pageTabs" :key="item.path" :label="item.name" :name="item.path"></el-tab-pane>
+                    </el-tabs>
                 </div>
+                <!--<div class="header-tabs-box">
+                     <el-breadcrumb class="app-levelbar" separator="/">
+                         <el-breadcrumb-item v-for="(item,index)  in levelList" :key="item.path">
+                             <span v-if='item.redirect==="noredirect"|| index === levelList.length-1'
+                                   class="no-redirect">{{item.name}}</span>
+                             <router-link v-else :to="item.redirect || item.path">{{item.name}}</router-link>
+                         </el-breadcrumb-item>
+                     </el-breadcrumb>
+                </div>-->
 
                 <!--<div class="header-right">-->
-                <div :style=" isPc ? 'float: right; width:50%;' : 'float: right'">
+                <div :style=" isPc ? 'float: right;' : 'float: right'" id="header_right">
                     <div style="float: right">
                         <el-dropdown trigger="click">
                             <span>{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
@@ -62,8 +68,8 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
-                    <div style="float: right;margin-top: 10px; margin-right: 10px">
-                        <el-avatar v-if="headPortrait" :size="40" :src="headPortrait"></el-avatar>
+                    <div style="float: right;margin-top: 5px; margin-right: 5px">
+                        <el-avatar v-if="headPortrait" :size="30" :src="headPortrait"></el-avatar>
                     </div>
                 </div>
 
@@ -121,7 +127,6 @@
 
                 </el-dialog>
             </el-header>
-
             <!--遮板-->
             <div class="main-mask"
                  v-show="menuShow"
@@ -130,7 +135,9 @@
             <el-main class="main">
 
                 <transition name="move" mode="out-in">
-                    <router-view></router-view>
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
                 </transition>
             </el-main>
         </el-container>
@@ -178,6 +185,8 @@
                 FILE_CONSTANT:FILE_CONSTANT,
                 fileConstant : "",
                 filePurpose :"",
+                //tabs 宽度
+                headerTabsBoxWidth : '0px',
                 //是否是PC端
                 isPc: true,
                 menuShow: false,
@@ -221,7 +230,7 @@
                 //新头像
                 newHeadPortrait: "",
                 //新头像Id
-                newHeadPortraitId: "",
+                newHeadPortraitId: ""
             };
         },
         components: {
@@ -242,6 +251,18 @@
             },
             isCollapse() {
                 return this.$store.state.app.sidebar.opened;
+            },
+            pageTabValue :{
+                get() {
+                    return this.$store.getters.pageTabValue;
+                },
+                set(value) {
+                    return this.$store.commit(this.$Types.SET_PAGE_TAB_VALUE, value);
+                }
+
+            },
+            pageTabs() {
+                return  this.$store.getters.pageTabs;
             },
             /**
              * @Description : 获取头像菜单标题
@@ -264,13 +285,41 @@
             showSideBar() {
                 this.$store.dispatch("ShowSideBar");
             },
-            getBreadcrumb() {
+            /*getBreadcrumb() {
                 let matched = this.$route.matched.filter(item => item.name);
                 const first = matched[0];
                 if (first && (first.name !== "首页" || first.path !== "")) {
                     matched = [{name: "首页", path: "/"}].concat(matched);
                 }
                 this.levelList = matched;
+            },*/
+            /**
+             * 删除tab
+             */
+            removeTab(targetName) {
+                this.$store.commit(this.$Types.DELETE_PAGE_TAB, targetName);
+            },
+            /**
+             * 点击tab
+             */
+            tabClick(tab, p2) {
+                this.$router.push(tab.name);
+                console.log("tab===>", tab)
+                console.log("p2===>", p2)
+            },
+            /**
+             * @Description : 获取Tabs宽度
+             * @Author : cheng fei
+             * @CreateDate 2020/6/6 22:39
+             */
+            getHeaderTabsBoxWidth() {
+                let header =  document.getElementById("header");
+                let headerLeft =  document.getElementById("header_left");
+                let headerRight =  document.getElementById("header_right");
+                if (header && headerLeft && headerRight) {
+                    return (header.offsetWidth -headerLeft.offsetWidth - headerRight.offsetWidth - 80) + 'px';
+                }
+                return '0px';
             },
             /**
              * @Description : 转跳登录页面
@@ -382,15 +431,19 @@
             this.filePurpose = this.FILE_CONSTANT.FILE_PURPOSE.ACCOUNT_HEAD_PORTRAIT;
             this.isPc = this.$IsPC();
             this.headPortrait = this.$store.getters.headPortrait;
+            this.$nextTick(function () {
+                this. headerTabsBoxWidth = this.getHeaderTabsBoxWidth();
+            })
         },
         created() {
-            this.getBreadcrumb();
+            //this.getBreadcrumb();
         },
-        watch: {
+        /*watch: {
             $route() {
                 this.getBreadcrumb();
-            }
-        }
+
+            },
+        }*/
     };
 </script>
 
@@ -559,7 +612,7 @@
     .header-tabs-box {
         display: inline-block;
         height: $header-height;
-        max-width: 60%;
+        width: 100px;
         overflow: hidden;
     }
 
@@ -590,7 +643,7 @@
 
     .app-levelbar {
         margin-left: 20px;
-        line-height: 57px !important;
+        line-height: 40px !important;
     }
 
     /*宽屏时出现*/
@@ -619,7 +672,7 @@
     }
 
     .slide-toggle-open {
-        padding-top: 17px;
+        padding-top: 7px;
     }
 
     @media screen and (min-width: 768px) {

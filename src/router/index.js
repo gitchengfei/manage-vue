@@ -100,9 +100,11 @@ export const constantRouterMap = [
         children: [
             {
                 path: "index",
+                name: "控制台",
                 component: main,
                 meta : {
-                    authority : ''
+                    authority : '',
+                    tab: true
                 }
             }
         ]
@@ -132,7 +134,9 @@ export const asyncRouterMap = [
                 name: "菜单设置",
                 icon: "iconiconset0194",
                 meta: {
-                    authority: '/system/menu'
+                    authority: '/system/menu',
+                    tab: true
+
                 }
             },
             {
@@ -141,7 +145,8 @@ export const asyncRouterMap = [
                 name: "权限管理",
                 icon: "iconic_opt_feature",
                 meta: {
-                    authority: '/system/permission'
+                    authority: '/system/permission',
+                    tab: true
                 }
             },
             {
@@ -150,7 +155,8 @@ export const asyncRouterMap = [
                 name: "数据字典",
                 icon: "iconshujuzidian",
                 meta: {
-                    authority: "/system/dictionary"
+                    authority: "/system/dictionary",
+                    tab: true
                 }
             },
             {
@@ -159,7 +165,8 @@ export const asyncRouterMap = [
                 name: "数据库操作日志",
                 icon: "iconrizhi",
                 meta: {
-                    authority: '/system/db/log'
+                    authority: '/system/db/log',
+                    tab: true
                 }
             },
             {
@@ -168,7 +175,8 @@ export const asyncRouterMap = [
                 name: "接口文档",
                 icon: "iconwendang",
                 meta: {
-                    authority: '/system/api'
+                    authority: '/system/api',
+                    tab: true
                 }
             },
         ]
@@ -188,7 +196,8 @@ export const asyncRouterMap = [
                 name: "账号列表",
                 icon: "iconzhanghaoguanli1",
                 meta: {
-                    authority: '/account/account'
+                    authority: '/account/account',
+                    tab: true
                 }
             },
             {
@@ -197,7 +206,8 @@ export const asyncRouterMap = [
                 name: "角色管理",
                 icon: "iconjiaoseguanli",
                 meta: {
-                    authority: '/account/role'
+                    authority: '/account/role',
+                    tab: true
                 }
             },
         ]
@@ -217,7 +227,8 @@ export const asyncRouterMap = [
                 name: "文件列表",
                 icon: "iconfolder-fill",
                 meta: {
-                    authority: '/file/file'
+                    authority: '/file/file',
+                    tab: true
                 }
             },
         ]

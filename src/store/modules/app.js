@@ -10,6 +10,8 @@ const state = {
     visitedViews: [],
     doHttp : 0,
     isPc : "",
+    pageTabs : [],
+    pageTabValue : "",
 };
 
 //加载
@@ -20,6 +22,8 @@ const getters = {
     sidebar: state => state.sidebar,
     visitedViews: state => state.visitedViews,
     isPc: state=> state.isPc,
+    pageTabs: state=> state.pageTabs,
+    pageTabValue: state=> state.pageTabValue,
 };
 
 // actions
@@ -88,6 +92,33 @@ const mutations = {
     },
     [types.IS_PC](state, isPc){
         state.isPc = isPc;
+    },
+    [types.ADD_PAGE_TAB](state, route){
+        if (route && route.meta && route.meta.tab) {
+            for(var i = 0 ; i < state.pageTabs.length; i ++) {
+                if (state.pageTabs[i].path === route.path) {
+                    state.pageTabValue = route.path;
+                    return;
+                }
+            }
+            state.pageTabs.push(route);
+            state.pageTabValue = route.path;
+        }
+    },
+    [types.DELETE_PAGE_TAB](state, path){
+        if (state.pageTabs.length === 1) {
+            return;
+        }
+        for(var i = 0 ; i < state.pageTabs.length; i ++) {
+            if (state.pageTabs[i].path === path) {
+                state.pageTabs.splice(i, 1);
+                state.pageTabValue =  state.pageTabs[i === state.pageTabs.length ? (i - 1) : (i + 1) ].path;
+                return
+            }
+        }
+    },
+    [types.SET_PAGE_TAB_VALUE](state, value){
+        state.pageTabValue = value;
     }
 };
 

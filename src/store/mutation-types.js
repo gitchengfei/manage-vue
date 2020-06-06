@@ -7,6 +7,9 @@ export const DEL_VISITED_VIEWS = "DEL_VISITED_VIEWS";
 export const OPEN_HTTP = "OPEN_HTTP";
 export const CLOSE_HTTP = "CLOSE_HTTP";
 export const IS_PC = "IS_PC";
+export const ADD_PAGE_TAB = "ADD_PAGE_TAB";
+export const DELETE_PAGE_TAB = "DELETE_PAGE_TAB";
+export const SET_PAGE_TAB_VALUE = "SET_PAGE_TAB_VALUE";
 
 
 // user（用户）相关

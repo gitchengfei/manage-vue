@@ -95,7 +95,7 @@ function compareRoute(route1, route2){
  * @param routes
  */
 function displayOrderRoute(routes) {
-    routes.sort(compareRoute)
+    routes.sort(compareRoute);
     routes.forEach((item)=>{
         if (item.children && item.children.length) {
             displayOrderRoute(item.children)
@@ -120,6 +120,10 @@ function getRouteAuthorityUrl(routeAuthority) {
 
 const whiteList = ["/login", "/401", "/404", "/500"]; // 不重定向白名单
 router.beforeEach((to, from, next) => {
+    //Tabs
+    if (to.meta && to.meta.tab) {
+        store.commit(types.ADD_PAGE_TAB, to);
+    }
     // 开启Progress
     NProgress.start();
     if (whiteList.indexOf(to.path) !== -1) {
