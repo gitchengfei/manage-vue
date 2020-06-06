@@ -62,9 +62,8 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
-                    <div style="float: right">
-                        <img v-if="headPortrait" :src="headPortrait"
-                             style="height: 40px; width: 40px; margin-top: 10px;margin-right: 5px">
+                    <div style="float: right;margin-top: 10px; margin-right: 10px">
+                        <el-avatar v-if="headPortrait" :size="40" :src="headPortrait"></el-avatar>
                     </div>
                 </div>
 
