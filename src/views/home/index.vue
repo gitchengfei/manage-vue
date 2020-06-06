@@ -136,8 +136,9 @@
 
                 <transition name="move" mode="out-in">
                     <keep-alive>
-                        <router-view></router-view>
+                        <router-view v-if="$router.meta.keepAlive"></router-view>
                     </keep-alive>
+                    <router-view v-if="!$router.meta.keepAlive"></router-view>
                 </transition>
             </el-main>
         </el-container>

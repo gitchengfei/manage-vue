@@ -38,7 +38,8 @@ export const constantRouterMap = [
         component: err404,
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -47,7 +48,8 @@ export const constantRouterMap = [
         name: "401",
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -56,7 +58,8 @@ export const constantRouterMap = [
         name: "404",
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -65,7 +68,8 @@ export const constantRouterMap = [
         name: "500",
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -74,7 +78,8 @@ export const constantRouterMap = [
         name: "登录",
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -84,7 +89,8 @@ export const constantRouterMap = [
         name: "首页",
         hidden: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         }
     },
     {
@@ -95,7 +101,8 @@ export const constantRouterMap = [
         name: "控制台",
         noDropdown: true,
         meta : {
-            authority : ''
+            authority : '',
+            keepAlive : false,
         },
         children: [
             {
@@ -104,6 +111,7 @@ export const constantRouterMap = [
                 component: main,
                 meta : {
                     authority : '',
+                    keepAlive : false,
                     tab: true
                 }
             }
@@ -135,6 +143,7 @@ export const asyncRouterMap = [
                 icon: "iconiconset0194",
                 meta: {
                     authority: '/system/menu',
+                    keepAlive : true,
                     tab: true
 
                 }
@@ -146,6 +155,7 @@ export const asyncRouterMap = [
                 icon: "iconic_opt_feature",
                 meta: {
                     authority: '/system/permission',
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -156,6 +166,7 @@ export const asyncRouterMap = [
                 icon: "iconshujuzidian",
                 meta: {
                     authority: "/system/dictionary",
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -166,6 +177,7 @@ export const asyncRouterMap = [
                 icon: "iconrizhi",
                 meta: {
                     authority: '/system/db/log',
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -176,6 +188,7 @@ export const asyncRouterMap = [
                 icon: "iconwendang",
                 meta: {
                     authority: '/system/api',
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -197,6 +210,7 @@ export const asyncRouterMap = [
                 icon: "iconzhanghaoguanli1",
                 meta: {
                     authority: '/account/account',
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -207,6 +221,7 @@ export const asyncRouterMap = [
                 icon: "iconjiaoseguanli",
                 meta: {
                     authority: '/account/role',
+                    keepAlive : true,
                     tab: true
                 }
             },
@@ -228,6 +243,7 @@ export const asyncRouterMap = [
                 icon: "iconfolder-fill",
                 meta: {
                     authority: '/file/file',
+                    keepAlive : true,
                     tab: true
                 }
             },
