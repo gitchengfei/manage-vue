@@ -136,10 +136,10 @@
 
                 <transition name="move" mode="out-in">
                     <keep-alive>
-                        <router-view v-if="$router.meta.keepAlive"></router-view>
+                        <router-view v-if="$route.meta.keepAlive"></router-view>
                     </keep-alive>
-                    <router-view v-if="!$router.meta.keepAlive"></router-view>
                 </transition>
+                <router-view v-if="!$route.meta.keepAlive"></router-view>
             </el-main>
         </el-container>
     </el-container>
@@ -305,8 +305,6 @@
              */
             tabClick(tab, p2) {
                 this.$router.push(tab.name);
-                console.log("tab===>", tab)
-                console.log("p2===>", p2)
             },
             /**
              * @Description : 获取Tabs宽度

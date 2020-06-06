@@ -133,7 +133,8 @@ export const asyncRouterMap = [
         icon: "iconxitongshezhi",
         name: "系统设置",
         meta: {
-            authority: '/system'
+            authority: '/system',
+            keepAlive : false,
         },
         children: [
             {
@@ -200,7 +201,8 @@ export const asyncRouterMap = [
         icon: "iconzhanghaoguanli",
         name: "账号管理",
         meta: {
-            authority: '/account'
+            authority: '/account',
+            keepAlive : false,
         },
         children: [
             {
@@ -233,7 +235,8 @@ export const asyncRouterMap = [
         icon: "iconwenjian",
         name: "文件管理",
         meta: {
-            authority: '/file'
+            authority: '/file',
+            keepAlive : false,
         },
         children: [
             {
