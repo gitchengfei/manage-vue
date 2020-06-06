@@ -74,14 +74,14 @@
     <div v-if="!item.hidden&&item.children">
         <router-link v-if="!item.hidden&&item.noDropdown&&!item.children[0].children" :to="item.path+'/'+item.children[0].path">
             <el-menu-item :index="item.path+'/'+item.children[0].path">
-                <span :class="'iconfont ' + item.icon"></span>
+                <i :class="'iconfont ' + item.icon"></i>
                 <span slot="title" class="menuName">{{item.name}}</span>
             </el-menu-item>
         </router-link>
 
         <el-submenu :index="item.path" v-else-if="!item.noDropdown&&!item.hidden">
             <template slot="title">
-                <span :class="'iconfont ' + item.icon"></span>
+                <i :class="'iconfont ' + item.icon"></i>
                 <span v-if='item.name' slot="title" class="menuName">{{item.name}}</span>
             </template>
             <template v-for="child in item.children" v-if='!child.hidden'>
@@ -90,7 +90,7 @@
 
                 <router-link :key="child.path" v-else :to="item.path+'/'+child.path">
                     <el-menu-item :index="item.path+'/'+child.path">
-                        <span :class="'iconfont ' + child.icon"></span>
+                        <i :class="'iconfont ' + child.icon"></i>
                         <span slot="title" class="menuName">{{child.name}}</span>
                     </el-menu-item>
                 </router-link>
