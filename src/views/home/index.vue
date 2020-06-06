@@ -39,8 +39,8 @@
                         <span></span>
                     </div>
                 </div>
-                <div class="header-tabs-box" style="margin-left: 20px; height: 42px;" :style="{ 'width' : headerTabsBoxWidth}">
-                    <el-tabs v-model="pageTabValue"  closable @tab-remove="removeTab" @tab-click="tabClick">
+                <div class="header-tabs-box" style="margin-left: 20px; height: 40px;" :style="{ 'width' : headerTabsBoxWidth}">
+                    <el-tabs v-model="pageTabValue" type="card"  closable @tab-remove="removeTab" @tab-click="tabClick">
                         <el-tab-pane v-for="(item, index) in pageTabs" :key="item.path" :label="item.name" :name="item.path"></el-tab-pane>
                     </el-tabs>
                 </div>

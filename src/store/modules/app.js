@@ -1,6 +1,7 @@
 import { getLocalStorage, setLocalStorage } from "../../utils/session_storage_util/LocaStorageUtil";
 import * as types from "../mutation-types";
 import { Loading } from 'element-ui';
+import router from "../../router/index";
 
 
 const state = {
@@ -112,7 +113,9 @@ const mutations = {
         for(var i = 0 ; i < state.pageTabs.length; i ++) {
             if (state.pageTabs[i].path === path) {
                 state.pageTabs.splice(i, 1);
-                state.pageTabValue =  state.pageTabs[i === state.pageTabs.length ? (i - 1) : (i + 1) ].path;
+                if (state.pageTabValue === path) {
+                    router.push(state.pageTabs[i === state.pageTabs.length ? (i -1) : i].path);
+                }
                 return
             }
         }
