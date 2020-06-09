@@ -2,7 +2,7 @@
 
     <el-container class="wrapper">
         <el-scrollbar class="container-left" wrap-class="container-left-wrap"
-                      :class="{'slide-hide': isCollapse, 'slide-in-left': menuShow}">
+                      :class="{'slide-hide': isCollapse, 'slide-in-left': !isCollapse}">
             <div class="logo">
                 <!--图片logo-->
                 <img alt="element-logo"
@@ -24,11 +24,11 @@
             </el-menu>
         </el-scrollbar>
 
-        <el-container class="container-box" v-bind:class="{'slide-hide': isCollapse, 'slide-in-left': menuShow}">
+        <el-container class="container-box" v-bind:class="{'slide-hide': isCollapse, 'slide-in-left': !isCollapse}">
 
             <el-header class="header" height="40px" id="header">
                 <div class="header-left" id="header_left">
-                    <div class="header-toggle" @click="menuShow = !menuShow; showSideBar()">
+                    <div class="header-toggle" @click="showSideBar()">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -128,9 +128,7 @@
                 </el-dialog>
             </el-header>
             <!--遮板-->
-            <div class="main-mask"
-                 v-show="menuShow"
-                 @click="menuShow = !menuShow"></div>
+            <!-- <div class="main-mask" v-show="menuShow" @click="menuShow = !menuShow"></div>-->
 
             <el-main class="main">
 
@@ -286,6 +284,20 @@
             showSideBar() {
                 this.$store.dispatch("ShowSideBar");
             },
+            /**
+             * @Description : 菜单显示隐藏
+             * @Author : cheng fei
+             * @CreateDate 2020/6/9 18:44
+             */
+            changMenuShoW() {
+                this.menuShow = !this.menuShow;
+                if (menuShow) {
+                    this.showSideBar();
+                } else {
+                    this.toggleSideBar();
+                }
+                this.setHeaderTabsBoxWidth();
+            },
             /*getBreadcrumb() {
                 let matched = this.$route.matched.filter(item => item.name);
                 const first = matched[0];
@@ -311,14 +323,17 @@
              * @Author : cheng fei
              * @CreateDate 2020/6/6 22:39
              */
-            getHeaderTabsBoxWidth() {
-                let header =  document.getElementById("header");
-                let headerLeft =  document.getElementById("header_left");
-                let headerRight =  document.getElementById("header_right");
-                if (header && headerLeft && headerRight) {
-                    return (header.offsetWidth -headerLeft.offsetWidth - headerRight.offsetWidth - 80) + 'px';
-                }
-                return '0px';
+            setHeaderTabsBoxWidth() {
+                this.$nextTick(function () {
+                    let headerTabsBoxWidth = '0px';
+                    let header =  document.getElementById("header");
+                    let headerLeft =  document.getElementById("header_left");
+                    let headerRight =  document.getElementById("header_right");
+                    if (header && headerLeft && headerRight) {
+                        headerTabsBoxWidth = (header.offsetWidth -headerLeft.offsetWidth - headerRight.offsetWidth - 80) + 'px';
+                    }
+                    this.headerTabsBoxWidth = headerTabsBoxWidth;
+                });
             },
             /**
              * @Description : 转跳登录页面
@@ -430,19 +445,20 @@
             this.filePurpose = this.FILE_CONSTANT.FILE_PURPOSE.ACCOUNT_HEAD_PORTRAIT;
             this.isPc = this.$IsPC();
             this.headPortrait = this.$store.getters.headPortrait;
-            this.$nextTick(function () {
-                this. headerTabsBoxWidth = this.getHeaderTabsBoxWidth();
-            })
+            this.setHeaderTabsBoxWidth();
         },
         created() {
             //this.getBreadcrumb();
         },
-        /*watch: {
-            $route() {
-                this.getBreadcrumb();
+        watch: {
+            /* $route() {
+                 this.getBreadcrumb();
 
-            },
-        }*/
+             },*/
+            isCollapse (value) {
+                this.setHeaderTabsBoxWidth();
+            }
+        }
     };
 </script>
 
