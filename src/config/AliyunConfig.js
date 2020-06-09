@@ -8,9 +8,9 @@ export const Aliyun = {
      * OSS
      */
     OSS: {
-        accessKeyId: 'your access key',
-        accessKeySecret: 'your access secret',
-        bucket: 'your bucket name',
+        accessKeyId: 'LTAIu7Zf1fACWE9Z',
+        accessKeySecret: 'acyo1cBF0yvM40r0JJqy5blL4ELR3Q',
+        bucket: 'cheng-manage',
         region: 'oss-cn-hangzhou',
     },
 };
