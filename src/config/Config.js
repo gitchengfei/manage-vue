@@ -8,17 +8,18 @@ const config = {
      */
     appKey : {
         //移动端
-        mobile : "76935098e5064e1e8",
+        mobile : "",
         //PC端
-        PC : '496e7b83df50483d9',
+        PC : '',
 
     },
 
     /**
      * 后端服务地址
      */
-    // serverUrl : "http://localhost:8080/",
-    serverUrl : "http://manage.service.chengfei.top/",
+    serverUrl : "http://localhost:8080/",
+    // serverUrl : "http://112.74.183.118:8080/",
+    // serverUrl : "https://manage.service.chengfei.top/",
 
     /**
      * 请求超时时间
