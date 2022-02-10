@@ -34,7 +34,7 @@
         "babel-jest": "^23.0.1",
         "less": "^3.9.0",
         "less-loader": "^5.0.0",
-        "node-sass": "^4.9.0",
+        "node-sass": "^7.0.0",
         "sass-loader": "^7.0.1",
         "vue-template-compiler": "^2.6.10"
     },
